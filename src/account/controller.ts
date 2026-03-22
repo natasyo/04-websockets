@@ -1,0 +1,23 @@
+import type { RegAnswer, User } from "../types/index.js";
+import type { AccountService } from "./service.js";
+import { WebSocket } from "ws";
+
+export class AccountController {
+  constructor(private service: AccountService) {}
+
+  addUser(ws: WebSocket, userData: User) {
+    const { user, player } = this.service.addUser(userData);
+    const answer: RegAnswer = {
+      type: "reg",
+      data: {
+        name: player!.name,
+        index: player!.index,
+        error: false,
+        errorText: "",
+      },
+      id: 0,
+    };
+
+    ws.send(JSON.stringify(answer));
+  }
+}
