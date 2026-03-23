@@ -26,13 +26,29 @@ export interface User {
   password: string;
 }
 
+export interface RequestResponse<T> {
+  type:string;
+  data:T,
+  id:number
+}
+
 export interface RegAnswer {
-  type: string;
-  data: {
     name: string;
     index: number | string;
     error: boolean;
     errorText: string;
-  };
-  id: number;
+}
+
+
+export interface CreateGameRequest{
+  questions:{
+    text:string,
+    options:string,
+    correctIndex:number,
+    timeLimitSec:number,
+  }
+}
+export interface CreateGameResponse{
+  gameId:string,
+  code:string
 }

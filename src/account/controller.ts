@@ -1,4 +1,4 @@
-import type { RegAnswer, User } from "../types/index.js";
+import type {RegAnswer, RequestResponse, User} from "../types/index.js";
 import type { AccountService } from "./service.js";
 import { WebSocket } from "ws";
 
@@ -7,7 +7,7 @@ export class AccountController {
 
   addUser(ws: WebSocket, userData: User) {
     const { user, player } = this.service.addUser(userData);
-    const answer: RegAnswer = {
+    const answer: RequestResponse<RegAnswer> = {
       type: "reg",
       data: {
         name: player!.name,

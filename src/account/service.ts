@@ -1,8 +1,9 @@
 import { randomUUID } from "node:crypto";
 import type { Player, User } from "../types/index.js";
+import { GameData} from "../data/data-game.js";
 export class AccountService {
-  users: User[] = [];
-  players: Player[] = [];
+  constructor(private readonly game:GameData) {
+  }
   addUser = (user: User) => {
     let player;
     if (
@@ -11,15 +12,15 @@ export class AccountService {
       user.name !== "" &&
       user.password !== ""
     ) {
-      if (!this.users.find((item) => item.name === item.name)) {
-        this.users.push(user);
+      if (!this.game.users.find((item) => item.name === item.name)) {
+        this.game.users.push(user);
         player = {
           name: user.name,
           index: randomUUID(),
           score: 0,
         };
       } else {
-        player = this.players.find((item) => item.name === user.name);
+        player = this.game.players.find((item) => item.name === user.name);
       }
     }
     return {user,player};
