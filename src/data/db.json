@@ -4,121 +4,84 @@
       "id": 1,
       "question": "Какой язык используется для стилизации веб-страниц?",
       "options": ["HTML", "Python", "CSS", "Java"],
-      "correctAnswer": "CSS"
+      "correctIndex": 3,
+      "timeLimitSec": 15
     },
     {
       "id": 2,
       "question": "Какой тег используется для создания ссылки в HTML?",
       "options": ["<link>", "<a>", "<href>", "<url>"],
-      "correctAnswer": "<a>"
+      "correctIndex": 2,
+      "timeLimitSec": 25
     },
     {
       "id": 3,
       "question": "Какой язык программирования используется для интерактивности на веб-страницах?",
       "options": ["C++", "JavaScript", "Python", "PHP"],
-      "correctAnswer": "JavaScript"
+      "correctIndex": 2,
+      "timeLimitSec": 35
     },
     {
       "id": 4,
       "question": "Какой из этих типов данных является строкой?",
       "options": ["123", "true", "\"Hello\"", "null"],
-      "correctAnswer": "\"Hello\""
+      "correctIndex": 3,
+      "timeLimitSec": 15
     },
     {
       "id": 5,
       "question": "Какой HTTP-метод используется для получения данных?",
       "options": ["POST", "PUT", "GET", "DELETE"],
-      "correctAnswer": "GET"
-    },
+      "correctIndex": 3,
+      "timeLimitSec": 15},
     {
       "id": 6,
       "question": "Какой тег используется для изображения?",
       "options": ["<img>", "<image>", "<pic>", "<src>"],
-      "correctAnswer": "<img>"
+      "correctIndex": 1,
+      "timeLimitSec": 15
     },
     {
       "id": 7,
       "question": "Какой оператор используется для сравнения значений в JavaScript?",
       "options": ["=", "==", "!=", "=>"],
-      "correctAnswer": "=="
+      "correctIndex": 2,
+      "timeLimitSec": 15
     },
     {
       "id": 8,
       "question": "Какой из этих языков является серверным?",
       "options": ["HTML", "CSS", "JavaScript", "Node.js"],
-      "correctAnswer": "Node.js"
+      "correctIndex": 4,
+      "timeLimitSec": 15
     },
     {
       "id": 9,
       "question": "Какой формат данных используется для обмена данными?",
       "options": ["XML", "JSON", "CSV", "Все перечисленные"],
-      "correctAnswer": "Все перечисленные"
+      "correctIndex": 4,
+      "timeLimitSec": 15
     },
     {
       "id": 10,
       "question": "Какой тег используется для списка?",
       "options": ["<ul>", "<list>", "<li>", "<ol>"],
-      "correctAnswer": "<ul>"
+      "correctIndex": 1,
+      "timeLimitSec": 15
     },
     {
       "id": 11,
       "question": "Как объявить переменную в JavaScript?",
       "options": ["var x;", "int x;", "let = x;", "variable x;"],
-      "correctAnswer": "var x;"
+      "correctIndex":1,
+      "timeLimitSec": 15
     },
     {
       "id": 12,
       "question": "Какой из этих методов добавляет элемент в конец массива?",
       "options": ["push()", "pop()", "shift()", "unshift()"],
-      "correctAnswer": "push()"
-    },
-    {
-      "id": 13,
-      "question": "Какой тег используется для заголовка первого уровня?",
-      "options": ["<h6>", "<heading>", "<h1>", "<head>"],
-      "correctAnswer": "<h1>"
-    },
-    {
-      "id": 14,
-      "question": "Какой оператор используется для логического И?",
-      "options": ["||", "&&", "!", "&"],
-      "correctAnswer": "&&"
-    },
-    {
-      "id": 15,
-      "question": "Какой метод преобразует JSON-строку в объект?",
-      "options": ["JSON.parse()", "JSON.stringify()", "JSON.convert()", "JSON.toObject()"],
-      "correctAnswer": "JSON.parse()"
-    },
-    {
-      "id": 16,
-      "question": "Какой из этих тегов используется для формы?",
-      "options": ["<form>", "<input>", "<button>", "<fieldset>"],
-      "correctAnswer": "<form>"
-    },
-    {
-      "id": 17,
-      "question": "Какой статус-код означает 'Не найдено'?",
-      "options": ["200", "301", "404", "500"],
-      "correctAnswer": "404"
-    },
-    {
-      "id": 18,
-      "question": "Какой язык используется для работы с базами данных?",
-      "options": ["SQL", "HTML", "CSS", "JSON"],
-      "correctAnswer": "SQL"
-    },
-    {
-      "id": 19,
-      "question": "Какой атрибут используется для указания источника изображения?",
-      "options": ["href", "src", "alt", "link"],
-      "correctAnswer": "src"
-    },
-    {
-      "id": 20,
-      "question": "Какой метод удаляет последний элемент массива?",
-      "options": ["pop()", "push()", "shift()", "splice()"],
-      "correctAnswer": "pop()"
+      "correctIndex": 1,
+      "timeLimitSec": 15
     }
   ]
 }

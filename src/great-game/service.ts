@@ -1,12 +1,10 @@
-import {type  GameData} from "../data/data-game.js";
-import type {CreateGameRequest} from "../types/index.js";
+import { type GameData } from '../data/data-game.js'
+import type { CreateGameRequest } from '../types/index.js'
 
-export  class GameService {
-    constructor(private readonly game:GameData) {
-    }
+export class GameService {
+  constructor(private readonly gameData: GameData) {}
 
-    createGame(data:CreateGameRequest){
-console.log(data);
-    }
-
+  createGame(data: CreateGameRequest) {
+    return this.gameData.questions
+  }
 }
