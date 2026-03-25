@@ -1,4 +1,4 @@
-import { WebSocketServer } from 'ws'
+import { WebSocketServer, type WebSocket } from 'ws'
 import { AccountController } from './account/controller.js'
 import { AccountService } from './account/service.js'
 import { GameData } from './data/data-game.js'
@@ -12,20 +12,21 @@ const accountController = new AccountController(accountService)
 const gameService = new GameService(game)
 const greatGame = new GameController(gameService)
 
-wss.on('connection', (ws) => {
-  console.log('connection connected')
+wss.on('connection', (ws: WebSocket) => {
   ws.send('Server connected')
   ws.on('message', (data) => {
     const dataMessage = JSON.parse(data.toString())
     console.log('Received message', dataMessage)
     const type = dataMessage.type
-    console.log(type)
     switch (type) {
       case 'reg':
         accountController.addUser(ws, dataMessage.data)
         break
       case 'create_game':
-        greatGame.create(ws, dataMessage)
+        greatGame.create(ws, dataMessage.data)
+        break
+      case 'join_game':
+        greatGame.join(wss, ws, dataMessage.data)
         break
       default:
         console.log('Command not found')

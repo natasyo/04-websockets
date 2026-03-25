@@ -1,0 +1,41 @@
+{
+  "type": "create_game",
+  "data": {
+    "questions": [
+      {
+      "id": 1,
+      "question": "Какой язык используется для стилизации веб-страниц?",
+      "options": ["HTML", "Python", "CSS", "Java"],
+      "correctIndex": 3,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 2,
+      "question": "Какой тег используется для создания ссылки в HTML?",
+      "options": ["<link>", "<a>", "<href>", "<url>"],
+      "correctIndex": 2,
+      "timeLimitSec": 25
+    }
+    ]
+  },
+  "id": 0
+}
+
+
+{
+  "type": "reg",
+  "data": {
+    "name": "login1",
+    "password": "<string>"
+  },
+  "id": 0
+}
+
+
+{
+  "type": "join_game",
+  "data": {
+    "code": "<string>"
+  },
+  "id": 0
+}

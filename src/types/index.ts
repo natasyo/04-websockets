@@ -39,15 +39,19 @@ export interface RegAnswer {
   errorText: string
 }
 
-export interface CreateGameRequest {
-  questions: {
-    text: string
-    options: string
-    correctIndex: number
-    timeLimitSec: number
-  }[]
+export interface CreateGameRequestData {
+  questions: Question[]
 }
-export interface CreateGameResponse {
+export interface CreateGameResponseData {
   gameId: string
   code: string
+}
+
+export interface JoinGameRequestData {
+  code: string
+}
+
+export interface PlayerJoinedData {
+  playerName: string
+  playerCount: string
 }

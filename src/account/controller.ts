@@ -17,7 +17,9 @@ export class AccountController {
       },
       id: 0,
     }
-
-    ws.send(JSON.stringify(answer))
+    if (player) {
+      ws.userId = player.index
+      ws.send(JSON.stringify(answer))
+    } else ws.send('error')
   }
 }
