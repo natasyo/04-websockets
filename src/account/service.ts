@@ -13,13 +13,14 @@ export class AccountService {
       user.password !== ''
     ) {
       console.log(user)
-      if (!this.game.users.find((item) => item.name === item.name)) {
+      if (!this.game.users.find((item) => user.name === item.name)) {
         this.game.users.push(user)
         player = {
           name: user.name,
           index: randomUUID(),
           score: 0,
         }
+        this.game.players.push(player)
       } else {
         player = this.game.players.find((item) => item.name === user.name)
       }
