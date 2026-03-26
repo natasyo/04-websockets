@@ -53,5 +53,17 @@ export interface JoinGameRequestData {
 
 export interface PlayerJoinedData {
   playerName: string
-  playerCount: string
+  playerCount: number
+}
+
+export interface GameJoined {
+  gameId: string
+}
+
+export interface QuestionBroadcast {
+  questionNumber: number
+  totalQuestions: number
+  text: string
+  options: string[]
+  timeLimitSec: number
 }

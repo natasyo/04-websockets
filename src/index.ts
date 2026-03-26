@@ -28,12 +28,14 @@ wss.on('connection', (ws: WebSocket) => {
       case 'join_game':
         greatGame.join(wss, ws, dataMessage.data)
         break
+      case 'start_game':
+        greatGame.start(wss, ws, dataMessage.data)
+        break
       default:
         console.log('Command not found')
         break
     }
-
-    ws.send('Message received')
+    console.log(game)
   })
 
   ws.on('close', (code: any) => {

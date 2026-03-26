@@ -4,6 +4,7 @@ import type {
   CreateGameResponseData,
   Game,
   JoinGameRequestData,
+  QuestionBroadcast,
   RequestResponse,
 } from '../types/index.js'
 import { randomUUID } from 'node:crypto'
@@ -12,6 +13,10 @@ import { WebSocket } from 'ws'
 
 export class GameService {
   constructor(private readonly gameData: GameData) {}
+
+  getPlayers() {
+    return this.gameData.players
+  }
 
   createGame(ws: WebSocket, data: CreateGameRequestData) {
     if (!ws.userId) {
@@ -43,15 +48,43 @@ export class GameService {
   joinGame(ws: WebSocket, data: JoinGameRequestData) {
     if (!ws.userId) {
       ws.send('is not authenticated')
-      return
+      return null
     }
-    const room = this.gameData.games.find((item) => item.code === data.code)
+    const game = this.gameData.games.find((item) => item.code === data.code)
     const player = this.gameData.players.find(
       (player) => player.index === ws.userId
     )
     if (player) {
-      this.gameData.players.push(player)
+      game?.players.push(player)
     }
-    return player
+    return { player, game }
+  }
+  startGame(gameId: string) {
+    const game = this.gameData.games.find((game) => game.id === gameId)
+    if (game) {
+      game.status = 'in_progress'
+      return this.getQuestion(game?.id, 0)
+    }
+    return null
+  }
+  getQuestion(gameId: string, num: number) {
+    const game = this.gameData.games.find((game) => game.id === gameId)
+    if (game) {
+      if (game.questions.length >= num) {
+        return 'game over'
+      }
+      const quest = game.questions[num - 1]
+      if (quest) {
+        const questData: QuestionBroadcast = {
+          questionNumber: num,
+          options: quest!.options,
+          text: quest.text,
+          timeLimitSec: quest.timeLimitSec,
+          totalQuestions: game.questions.length,
+        }
+        return questData
+      }
+    }
+    return null
   }
 }
