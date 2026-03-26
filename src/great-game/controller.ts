@@ -55,7 +55,7 @@ export class GameController {
   start(
     wss: Server<typeof WebSocket, typeof IncomingMessage>,
     ws: WebSocket,
-    gameId: string
+    { gameId }: { gameId: string }
   ) {
     const data = this.service.startGame(gameId)
     if (data && typeof data === 'object') {

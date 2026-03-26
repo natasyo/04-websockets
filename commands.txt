@@ -39,3 +39,12 @@
   },
   "id": 0
 }
+
+
+{
+  "type": "start_game",
+  "data": {
+    "gameId": "<string>"
+  },
+  "id": 0
+}

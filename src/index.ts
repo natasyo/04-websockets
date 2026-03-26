@@ -18,6 +18,7 @@ wss.on('connection', (ws: WebSocket) => {
     const dataMessage = JSON.parse(data.toString())
     console.log('Received message', dataMessage)
     const type = dataMessage.type
+    console.log('-------------------------Received type', type)
     switch (type) {
       case 'reg':
         accountController.addUser(ws, dataMessage.data)

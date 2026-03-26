@@ -60,17 +60,17 @@ export class GameService {
     return { player, game }
   }
   startGame(gameId: string) {
-    const game = this.gameData.games.find((game) => game.id === gameId)
+    const game = this.gameData.games.find((gameItem) => gameItem.id === gameId)
     if (game) {
       game.status = 'in_progress'
-      return this.getQuestion(game?.id, 0)
+      return this.getQuestion(game?.id, 1)
     }
     return null
   }
   getQuestion(gameId: string, num: number) {
     const game = this.gameData.games.find((game) => game.id === gameId)
     if (game) {
-      if (game.questions.length >= num) {
+      if (game.questions.length <= num) {
         return 'game over'
       }
       const quest = game.questions[num - 1]
