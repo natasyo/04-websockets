@@ -1,4 +1,5 @@
 import type {
+  Answer,
   CreateGameRequestData,
   GameJoined,
   JoinGameRequestData,
@@ -68,5 +69,10 @@ export class GameController {
         client.send(JSON.stringify(sendFirstQuestionData))
       })
     }
+  }
+  answer( wss: Server<typeof WebSocket, typeof IncomingMessage>,
+    ws: WebSocket,
+    answer: Answer){
+this.service.answer(answer)
   }
 }

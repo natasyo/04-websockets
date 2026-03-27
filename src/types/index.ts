@@ -67,3 +67,29 @@ export interface QuestionBroadcast {
   options: string[]
   timeLimitSec: number
 }
+
+export interface Answer {
+  gameId: string
+  questionIndex: number
+  answerIndex: number
+}
+
+export interface PlayerResults {
+  name: string
+  answered: boolean
+  correct: boolean
+  pointsEarned: number
+  totalScore: number
+}
+
+export interface QuestionResult {
+  questionIndex: number
+  correctIndex: number
+  playerResults: PlayerResults[]
+}
+
+
+export interface QuestionsResultData{
+  gameId:string
+  questionResult:QuestionResult
+}

@@ -1,11 +1,14 @@
 import { type GameData } from '../data/data-game.js'
 import type {
+  Answer,
   CreateGameRequestData,
   CreateGameResponseData,
   Game,
   JoinGameRequestData,
   QuestionBroadcast,
+  QuestionResult,
   RequestResponse,
+  PlayerResults,
 } from '../types/index.js'
 import { randomUUID } from 'node:crypto'
 import { generateCode } from '../functions/generateCode.js'
@@ -86,5 +89,30 @@ export class GameService {
       }
     }
     return null
+  }
+  answer(ws: WebSocket, answer: Answer) {
+    const userId = ws.userId
+    if (!userId) {
+      throw new Error('Not auth')
+    }
+    const user = this.gameData.players.find((item) => item.index === ws.userId)
+
+    const game = this.gameData.games.find((item) => item.id === answer.gameId)
+
+    if (!game || !user) {
+      throw new Error('Not found game')
+    }
+    const playerResults: PlayerResults = {
+      answered: true,
+      correct: false,
+      name: user?.name,
+      totalScore: game.questions.length,
+      pointsEarned: 10,
+    }
+    const questionresult: QuestionResult = {
+      questionIndex: answer.questionIndex,
+      correctIndex: game.questions[answer.questionIndex]!.correctIndex,
+      playerResults:[playerResults],
+    }
   }
 }
