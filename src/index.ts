@@ -33,7 +33,7 @@ wss.on('connection', (ws: WebSocket) => {
         greatGame.start(wss, ws, dataMessage.data)
         break
       case 'answer':
-        greatGame.start(wss, ws, dataMessage.data)
+        greatGame.answer(wss, ws, dataMessage.data)
         break
       default:
         console.log('Command not found')

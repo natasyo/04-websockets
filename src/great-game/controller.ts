@@ -70,9 +70,11 @@ export class GameController {
       })
     }
   }
-  answer( wss: Server<typeof WebSocket, typeof IncomingMessage>,
+  answer(
+    wss: Server<typeof WebSocket, typeof IncomingMessage>,
     ws: WebSocket,
-    answer: Answer){
-this.service.answer(answer)
+    answer: Answer
+  ) {
+    this.service.answer(ws, answer)
   }
 }
