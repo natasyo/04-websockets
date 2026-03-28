@@ -9,6 +9,9 @@ import type {
   QuestionResult,
   RequestResponse,
   PlayerResults,
+  PlayerJoinedData,
+  Player,
+  QuestionsResultAnswer,
 } from '../types/index.js'
 import { randomUUID } from 'node:crypto'
 import { generateCode } from '../functions/generateCode.js'
@@ -50,17 +53,38 @@ export class GameService {
 
   joinGame(ws: WebSocket, data: JoinGameRequestData) {
     if (!ws.userId) {
-      ws.send('is not authenticated')
-      return null
+      throw new Error('You are not logged in')
     }
     const game = this.gameData.games.find((item) => item.code === data.code)
+    if (!game) {
+      throw new Error('game not found')
+    }
     const player = this.gameData.players.find(
       (player) => player.index === ws.userId
     )
-    if (player) {
-      game?.players.push(player)
+    if (!player) {
+      throw new Error('player not found')
     }
-    return { player, game }
+    const isJoin = game.players.find((item) => item.index === player.index)
+    if (isJoin) {
+      throw new Error('player is joined')
+    }
+    game.players.push(player)
+    const playerJoin: PlayerJoinedData = {
+      playerName: player.name,
+      playerCount: game.players.length,
+    }
+    const playersResponse: RequestResponse<PlayerJoinedData> = {
+      type: 'player_joined',
+      data: playerJoin,
+      id: 0,
+    }
+    const updatePlayersResponse: RequestResponse<Player[]> = {
+      type: 'player_joined',
+      data: game?.players,
+      id: 0,
+    }
+    return { player, game, playersResponse, updatePlayersResponse }
   }
   startGame(gameId: string) {
     const game = this.gameData.games.find((gameItem) => gameItem.id === gameId)
@@ -109,10 +133,16 @@ export class GameService {
       totalScore: game.questions.length,
       pointsEarned: 10,
     }
-    const questionresult: QuestionResult = {
+    const questionResult: QuestionResult = {
       questionIndex: answer.questionIndex,
       correctIndex: game.questions[answer.questionIndex]!.correctIndex,
-      playerResults:[playerResults],
+      playerResults: [playerResults],
     }
+    const questionResultAnswer: QuestionsResultAnswer = {
+      gameId: game.id,
+      questionResult: questionResult,
+    }
+    this.gameData.questionsResults.push(questionResultAnswer)
+    return { questionResultAnswer }
   }
 }

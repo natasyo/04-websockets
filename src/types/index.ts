@@ -88,8 +88,7 @@ export interface QuestionResult {
   playerResults: PlayerResults[]
 }
 
-
-export interface QuestionsResultData{
-  gameId:string
-  questionResult:QuestionResult
+export interface QuestionsResultAnswer {
+  gameId: string
+  questionResult: QuestionResult
 }

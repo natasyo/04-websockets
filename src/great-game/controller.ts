@@ -21,35 +21,26 @@ export class GameController {
     ws: WebSocket,
     game: JoinGameRequestData
   ) {
-    const dataRequest = this.service.joinGame(ws, game)
-    if (dataRequest && dataRequest.player && dataRequest.game) {
-      const { game, player } = dataRequest
-      const gameJoined: RequestResponse<GameJoined> = {
-        type: 'game_joined',
-        data: {
-          gameId: game.id,
-        },
-        id: 0,
+    try {
+      const dataRequest = this.service.joinGame(ws, game)
+      if (dataRequest && dataRequest.player && dataRequest.game) {
+        const { game, playersResponse, updatePlayersResponse } = dataRequest
+        const gameJoined: RequestResponse<GameJoined> = {
+          type: 'game_joined',
+          data: {
+            gameId: game.id,
+          },
+          id: 0,
+        }
+        ws.send(JSON.stringify(gameJoined))
+
+        wss.clients.forEach((client) => {
+          client.send(JSON.stringify(playersResponse))
+          client.send(JSON.stringify(updatePlayersResponse))
+        })
       }
-      ws.send(JSON.stringify(gameJoined))
-      const playerJoin: PlayerJoinedData = {
-        playerName: player.name,
-        playerCount: game.players.length,
-      }
-      const playersResponse: RequestResponse<PlayerJoinedData> = {
-        type: 'player_joined',
-        data: playerJoin,
-        id: 0,
-      }
-      const updatePlayersResponse: RequestResponse<Player[]> = {
-        type: 'player_joined',
-        data: game?.players,
-        id: 0,
-      }
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify(playersResponse))
-        client.send(JSON.stringify(updatePlayersResponse))
-      })
+    } catch (error) {
+      ws.send((error as Error).message)
     }
   }
 
@@ -75,6 +66,10 @@ export class GameController {
     ws: WebSocket,
     answer: Answer
   ) {
-    this.service.answer(ws, answer)
+    try {
+      const { questionResultAnswer } = this.service.answer(ws, answer)
+    } catch (error) {
+      ws.send((error as Error).message)
+    }
   }
 }
