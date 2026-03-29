@@ -12,6 +12,7 @@ import type {
   PlayerJoinedData,
   Player,
   QuestionsResultAnswer,
+  AnswerAccepted,
 } from '../types/index.js'
 import { randomUUID } from 'node:crypto'
 import { generateCode } from '../functions/generateCode.js'
@@ -125,7 +126,7 @@ export class GameService {
     if (!game || !user) {
       throw new Error('Not found game')
     }
-    const points = (Date.now() - Number(ws.startTime)) * 1000
+    const points =ws.startTime? (Date.now() - ws.startTime) / 1000:0
     let totalScore = 0
     const gameResults = this.gameData.questionsResults.find(
       (item) => item.gameId === game.id
@@ -154,7 +155,14 @@ export class GameService {
       questionResult: questionResult,
     }
     this.gameData.questionsResults.push(questionResultAnswer)
-    return { questionResultAnswer }
+    const response:RequestResponse<AnswerAccepted>={
+      type:"answer_accepted",
+      data:{
+        questionIndex:answer.questionIndex
+      },
+      id:0
+    }
+    ws.send(JSON.stringify(response))
   }
 
 

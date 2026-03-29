@@ -40,7 +40,7 @@ export class GameController {
         })
       }
     } catch (error) {
-      ws.send((error as Error).message)
+      ws.send(JSON.stringify({error:(error as Error).message}))
     }
   }
 
@@ -49,16 +49,20 @@ export class GameController {
     ws: WebSocket,
     { gameId }: { gameId: string }
   ) {
-    const data = this.service.startGame(gameId)
-    if (data && typeof data === 'object') {
-      const sendFirstQuestionData: RequestResponse<QuestionBroadcast> = {
-        type: 'question',
-        data,
-        id: 0,
+    try {
+      const data = this.service.startGame(ws, gameId)
+      if (data && typeof data === 'object') {
+        const sendFirstQuestionData: RequestResponse<QuestionBroadcast> = {
+          type: 'question',
+          data,
+          id: 0,
+        }
+        wss.clients.forEach((client) => {
+          client.send(JSON.stringify(sendFirstQuestionData))
+        })
       }
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify(sendFirstQuestionData))
-      })
+    } catch (error) {
+      ws.send(JSON.stringify({ error:(error as Error).message }))
     }
   }
   answer(
