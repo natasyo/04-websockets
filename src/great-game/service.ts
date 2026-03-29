@@ -145,4 +145,5 @@ export class GameService {
     this.gameData.questionsResults.push(questionResultAnswer)
     return { questionResultAnswer }
   }
+  answerAccepted() {}
 }

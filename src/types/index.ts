@@ -92,3 +92,5 @@ export interface QuestionsResultAnswer {
   gameId: string
   questionResult: QuestionResult
 }
+
+export interface AnswerAccepted {}
