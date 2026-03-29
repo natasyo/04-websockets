@@ -16,6 +16,7 @@ import type {
 import { randomUUID } from 'node:crypto'
 import { generateCode } from '../functions/generateCode.js'
 import { WebSocket } from 'ws'
+import { error } from 'node:console'
 
 export class GameService {
   constructor(private readonly gameData: GameData) {}
@@ -70,6 +71,7 @@ export class GameService {
       throw new Error('player is joined')
     }
     game.players.push(player)
+    ws.gameId = game.id
     const playerJoin: PlayerJoinedData = {
       playerName: player.name,
       playerCount: game.players.length,
@@ -86,33 +88,30 @@ export class GameService {
     }
     return { player, game, playersResponse, updatePlayersResponse }
   }
-  startGame(gameId: string) {
+  startGame(ws: WebSocket, gameId: string) {
     const game = this.gameData.games.find((gameItem) => gameItem.id === gameId)
-    if (game) {
-      game.status = 'in_progress'
-      return this.getQuestion(game?.id, 1)
-    }
-    return null
+    if (!game) throw new Error('game not found')
+    game.status = 'in_progress'
+
+    return this.getQuestion(ws, game?.id, 1)
   }
-  getQuestion(gameId: string, num: number) {
+  getQuestion(ws: WebSocket, gameId: string, num: number) {
     const game = this.gameData.games.find((game) => game.id === gameId)
-    if (game) {
-      if (game.questions.length <= num) {
-        return 'game over'
-      }
-      const quest = game.questions[num - 1]
-      if (quest) {
-        const questData: QuestionBroadcast = {
-          questionNumber: num,
-          options: quest!.options,
-          text: quest.text,
-          timeLimitSec: quest.timeLimitSec,
-          totalQuestions: game.questions.length,
-        }
-        return questData
-      }
+    if (!game) throw new Error('game not found')
+
+    if (game.questions.length <= num) throw new Error('Not found questions')
+
+    const quest = game.questions[num - 1]
+
+    const questData: QuestionBroadcast = {
+      questionNumber: num,
+      options: quest!.options,
+      text: quest!.text,
+      timeLimitSec: quest!.timeLimitSec,
+      totalQuestions: game.questions.length,
     }
-    return null
+    ws.startTime = Date.now()
+    return questData
   }
   answer(ws: WebSocket, answer: Answer) {
     const userId = ws.userId
@@ -126,12 +125,24 @@ export class GameService {
     if (!game || !user) {
       throw new Error('Not found game')
     }
+    const points = (Date.now() - Number(ws.startTime)) * 1000
+    let totalScore = 0
+    const gameResults = this.gameData.questionsResults.find(
+      (item) => item.gameId === game.id
+    )
+    if (gameResults) {
+      const userResult = gameResults.questionResult.playerResults.find(
+        (item) => item.name === user.name
+      )
+      if (userResult) totalScore = userResult.totalScore + points
+    }
+
     const playerResults: PlayerResults = {
       answered: true,
       correct: false,
       name: user?.name,
-      totalScore: game.questions.length,
-      pointsEarned: 10,
+      totalScore: totalScore,
+      pointsEarned: points,
     }
     const questionResult: QuestionResult = {
       questionIndex: answer.questionIndex,
@@ -145,5 +156,6 @@ export class GameService {
     this.gameData.questionsResults.push(questionResultAnswer)
     return { questionResultAnswer }
   }
-  answerAccepted() {}
+
+
 }

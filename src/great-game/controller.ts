@@ -67,7 +67,7 @@ export class GameController {
     answer: Answer
   ) {
     try {
-      const { questionResultAnswer } = this.service.answer(ws, answer)
+      this.service.answer(ws, answer)
     } catch (error) {
       ws.send((error as Error).message)
     }

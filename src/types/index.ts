@@ -93,4 +93,6 @@ export interface QuestionsResultAnswer {
   questionResult: QuestionResult
 }
 
-export interface AnswerAccepted {}
+export interface AnswerAccepted {
+ questionIndex: number
+}
