@@ -1,0 +1,87 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Какой язык используется для стилизации веб-страниц?",
+      "options": ["HTML", "Python", "CSS", "Java"],
+      "correctIndex": 3,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 2,
+      "question": "Какой тег используется для создания ссылки в HTML?",
+      "options": ["<link>", "<a>", "<href>", "<url>"],
+      "correctIndex": 2,
+      "timeLimitSec": 25
+    },
+    {
+      "id": 3,
+      "question": "Какой язык программирования используется для интерактивности на веб-страницах?",
+      "options": ["C++", "JavaScript", "Python", "PHP"],
+      "correctIndex": 2,
+      "timeLimitSec": 35
+    },
+    {
+      "id": 4,
+      "question": "Какой из этих типов данных является строкой?",
+      "options": ["123", "true", "\"Hello\"", "null"],
+      "correctIndex": 3,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 5,
+      "question": "Какой HTTP-метод используется для получения данных?",
+      "options": ["POST", "PUT", "GET", "DELETE"],
+      "correctIndex": 3,
+      "timeLimitSec": 15},
+    {
+      "id": 6,
+      "question": "Какой тег используется для изображения?",
+      "options": ["<img>", "<image>", "<pic>", "<src>"],
+      "correctIndex": 1,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 7,
+      "question": "Какой оператор используется для сравнения значений в JavaScript?",
+      "options": ["=", "==", "!=", "=>"],
+      "correctIndex": 2,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 8,
+      "question": "Какой из этих языков является серверным?",
+      "options": ["HTML", "CSS", "JavaScript", "Node.js"],
+      "correctIndex": 4,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 9,
+      "question": "Какой формат данных используется для обмена данными?",
+      "options": ["XML", "JSON", "CSV", "Все перечисленные"],
+      "correctIndex": 4,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 10,
+      "question": "Какой тег используется для списка?",
+      "options": ["<ul>", "<list>", "<li>", "<ol>"],
+      "correctIndex": 1,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 11,
+      "question": "Как объявить переменную в JavaScript?",
+      "options": ["var x;", "int x;", "let = x;", "variable x;"],
+      "correctIndex":1,
+      "timeLimitSec": 15
+    },
+    {
+      "id": 12,
+      "question": "Какой из этих методов добавляет элемент в конец массива?",
+      "options": ["push()", "pop()", "shift()", "unshift()"],
+      "correctIndex": 1,
+      "timeLimitSec": 15
+    }
+  ]
+}
