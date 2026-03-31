@@ -94,5 +94,5 @@ export interface QuestionsResultAnswer {
 }
 
 export interface AnswerAccepted {
- questionIndex: number
+  questionIndex: number
 }

@@ -48,3 +48,12 @@
   },
   "id": 0
 }
+{
+  "type": "answer",
+  "data": {
+    "gameId": "<string>",
+    "questionIndex": "<number>",
+    "answerIndex": "<number>"
+  },
+  "id": 0
+}

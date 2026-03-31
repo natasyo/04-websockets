@@ -126,16 +126,30 @@ export class GameService {
     if (!game || !user) {
       throw new Error('Not found game')
     }
-    const points =ws.startTime? (Date.now() - ws.startTime) / 1000:0
+    const points = ws.startTime ? (Date.now() - ws.startTime) / 1000 : 0
     let totalScore = 0
     const gameResults = this.gameData.questionsResults.find(
       (item) => item.gameId === game.id
     )
-    if (gameResults) {
+    const question = game.questions[answer.questionIndex]
+    if (!question) {
+      ws.send(JSON.stringify({ message: 'game over' }))
+      return
+    }
+    let questionResult: QuestionResult | undefined =
+      this.gameData.questionsResults.find(
+        (item) => item.gameId === game.id
+      )?.questionResult
+    if (
+      gameResults &&
+      game.questions[answer.questionIndex] &&
+      question.correctIndex === answer.answerIndex
+    ) {
       const userResult = gameResults.questionResult.playerResults.find(
         (item) => item.name === user.name
       )
       if (userResult) totalScore = userResult.totalScore + points
+      else totalScore = points
     }
 
     const playerResults: PlayerResults = {
@@ -145,25 +159,37 @@ export class GameService {
       totalScore: totalScore,
       pointsEarned: points,
     }
-    const questionResult: QuestionResult = {
-      questionIndex: answer.questionIndex,
-      correctIndex: game.questions[answer.questionIndex]!.correctIndex,
-      playerResults: [playerResults],
+    if (questionResult) {
+      questionResult.playerResults.push(playerResults)
+    } else {
+      questionResult = {
+        questionIndex: answer.questionIndex,
+        correctIndex: game.questions[answer.questionIndex]!.correctIndex,
+        playerResults: [playerResults],
+      }
     }
+
     const questionResultAnswer: QuestionsResultAnswer = {
       gameId: game.id,
       questionResult: questionResult,
     }
     this.gameData.questionsResults.push(questionResultAnswer)
-    const response:RequestResponse<AnswerAccepted>={
-      type:"answer_accepted",
-      data:{
-        questionIndex:answer.questionIndex
+    const response: RequestResponse<AnswerAccepted> = {
+      type: 'answer_accepted',
+      data: {
+        questionIndex: answer.questionIndex,
       },
-      id:0
+      id: 0,
     }
     ws.send(JSON.stringify(response))
+    if (game.questions.length >= answer.questionIndex) {
+      const newQuestion = this.getQuestion(
+        ws,
+        game.id,
+        answer.questionIndex + 1
+      )
+
+      ws.send(JSON.stringify(newQuestion))
+    }
   }
-
-
 }
